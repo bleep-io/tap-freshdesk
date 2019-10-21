@@ -172,6 +172,8 @@ def sync_tickets_by_filter(bookmark_property, predefined_filter=None):
                 subrow['ratings'] = transform_dict(subrow['ratings'], key_key="question")
                 if subrow[bookmark_property] >= start:
                     singer.write_record("satisfaction_ratings", "1")
+                else:
+                    logger.info("Error on subrow")
         except HTTPError as e:
             if e.response.status_code == 403:
                 logger.info("The Surveys feature is unavailable. Skipping the satisfaction_ratings stream.")
