@@ -178,21 +178,21 @@ def sync_tickets_by_filter(bookmark_property, predefined_filter=None):
             else:
                 raise
 
-        try:
-            logger.info("Ticket {}: Syncing time entries".format(row['id']))
-            for subrow in gen_request(get_url("sub_ticket", id=row['id'], entity="time_entries")):
-                if subrow[bookmark_property] >= start:
-                    singer.write_record("time_entries", subrow, time_extracted=singer.utils.now())
+        #try:
+            #logger.info("Ticket {}: Syncing time entries".format(row['id']))
+            #for subrow in gen_request(get_url("sub_ticket", id=row['id'], entity="time_entries")):
+                #if subrow[bookmark_property] >= start:
+                    #singer.write_record("time_entries", subrow, time_extracted=singer.utils.now())
 
-        except HTTPError as e:
-            if e.response.status_code == 403:
-                logger.info("The Timesheets feature is unavailable. Skipping the time_entries stream.")
-            elif e.response.status_code == 404:
+        #except HTTPError as e:
+            #if e.response.status_code == 403:
+                #logger.info("The Timesheets feature is unavailable. Skipping the time_entries stream.")
+            #elif e.response.status_code == 404:
                 # 404 is being returned for deleted tickets and spam
-                logger.info("Could not retrieve time entries for ticket id {}. This may be caused by tickets "
+                #logger.info("Could not retrieve time entries for ticket id {}. This may be caused by tickets "
                             "marked as spam or deleted.".format(row['id']))
-            else:
-                raise
+            #else:
+                #raise
 
         utils.update_state(STATE, state_entity, row[bookmark_property])
         singer.write_record(endpoint, row, time_extracted=singer.utils.now())
