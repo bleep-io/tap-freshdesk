@@ -154,17 +154,17 @@ def sync_tickets_by_filter(bookmark_property, predefined_filter=None):
         # get all sub-entities and save them
         logger.info("Ticket {}: Syncing conversations".format(row['id']))
 
-        try:
-            for subrow in gen_request(get_url("sub_ticket", id=row['id'], entity="conversations")):
-                subrow.pop("attachments", None)
-                subrow.pop("body", None)
-                if subrow[bookmark_property] >= start:
-                    singer.write_record("conversations", subrow, time_extracted=singer.utils.now())
-        except HTTPError as e:
-            if e.response.status_code == 403:
-                logger.info('Invalid ticket ID requested from Freshdesk {0}'.format(row['id']))
-            else:
-                logger.info("Error")
+        #try:
+            #for subrow in gen_request(get_url("sub_ticket", id=row['id'], entity="conversations")):
+                #subrow.pop("attachments", None)
+                #subrow.pop("body", None)
+                #if subrow[bookmark_property] >= start:
+                    #singer.write_record("conversations", subrow, time_extracted=singer.utils.now())
+        #except HTTPError as e:
+            #if e.response.status_code == 403:
+                #logger.info('Invalid ticket ID requested from Freshdesk {0}'.format(row['id']))
+            #else:
+                #logger.info("Error")
 
         #try:
             #logger.info("Ticket {}: Syncing satisfaction ratings".format(row['id']))
