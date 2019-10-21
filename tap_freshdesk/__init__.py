@@ -162,7 +162,7 @@ def sync_tickets_by_filter(bookmark_property, predefined_filter=None):
                     singer.write_record("conversations", subrow, time_extracted=singer.utils.now())
         except HTTPError as e:
             if e.response.status_code == 403:
-                #logger.info('Invalid ticket ID requested from Freshdesk {0}'.format(row['id']))
+                logger.info('Invalid ticket ID requested from Freshdesk {0}'.format(row['id']))
             else:
                 raise
 
