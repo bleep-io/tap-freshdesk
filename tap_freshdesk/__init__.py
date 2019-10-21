@@ -176,7 +176,7 @@ def sync_tickets_by_filter(bookmark_property, predefined_filter=None):
             if e.response.status_code == 403:
                 logger.info("The Surveys feature is unavailable. Skipping the satisfaction_ratings stream.")
             else:
-                raise
+                logger.info("No data available, skipping")
 
         #try:
             #logger.info("Ticket {}: Syncing time entries".format(row['id']))
