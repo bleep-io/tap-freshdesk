@@ -164,7 +164,7 @@ def sync_tickets_by_filter(bookmark_property, predefined_filter=None):
             if e.response.status_code == 403:
                 logger.info('Invalid ticket ID requested from Freshdesk {0}'.format(row['id']))
             else:
-                raise
+                logger.info("Error")
 
         #try:
             #logger.info("Ticket {}: Syncing satisfaction ratings".format(row['id']))
